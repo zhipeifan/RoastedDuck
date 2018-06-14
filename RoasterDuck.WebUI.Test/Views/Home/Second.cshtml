@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Second";
+}
+
+<h2>Second</h2>
+
+<script src="~/scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="~/scripts/jquery.md5.js"></script>
+<script src="~/scripts/testjs.js"></script>
+<script src="~/scripts/jsMD5.js"></script>
+<script type="text/javascript">
+   
+    
+    function testMd5()
+    {
+        
+        var reqData = { Usid: 1, OpenId: "17E0A36C-CAF0-4041-9E94-9F8FA16CA4BE", UserPhone: "13601946325", PageIndex: 1, PageSize: 10, Secret: "" };
+    
+        
+        debugger;
+        var dataArray = [reqData.UserPhone.split("").reverse().join(""), reqData.Usid, reqData.OpenId, "RoastedDuckTest"];
+        dataArray.sort();
+        var culStr = dataArray.toString();
+        var reg = new RegExp(",", "g");
+        var reg2 = new RegExp("-", "g");
+        reqData.Secret = Encryption_md5(culStr.replace(reg, "").replace(reg2, ""));
+        //var md5_str = $.md5(dataArray.toString());
+        $.ajax({
+            type: "post",
+            url: "http://localhost:27736/api/test/testone",
+            //jsonp: "callback",
+            // jsonpCallback:"success",
+            // data: JSON.stringify(data),
+            data: reqData,
+            dataType: "json",
+            withCredentials: true,
+            // async: true,
+            success: function () {
+                //.....
+            }
+        });
+    }
+
+</script>
+
+
+<input type="button" value="click me" onclick="testMd5()" />

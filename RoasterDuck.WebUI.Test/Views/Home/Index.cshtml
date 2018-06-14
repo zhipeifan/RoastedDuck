@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/scripts/jquery-3.3.1.min.js"></script>
+<script src="~/scripts/jquery.md5.js"></script>
+
+<script type="text/javascript">
+    
+    function testMd5()
+    {
+        var data = { Usid: 1, OpenId: "17E0A36C-CAF0-4041-9E94-9F8FA16CA4BE", UserPhone: "13601946325", PageIndex: 1, PageSize: 10, Secret: "" };
+        
+        //md5("value")
+        debugger;
+        var dataArray = [data.UserPhone.split("").reverse().join(""), data.Usid, data.OpenId, "RoastedDuckTest"];
+        dataArray.sort();
+        data.Secret = (new md5(dataArray.toString().replace(",",""))).toLocaleString();
+        //var md5_str = $.md5(dataArray.toString());
+        $.ajax({
+            type: "post",
+            url: "http://localhost:27736/api/test/testone",
+            //jsonp: "callback",
+           // jsonpCallback:"success",
+            data: JSON.stringify(data),
+            dataType:"json",
+            withCredentials:true,
+           // async: true,
+            success: function () {
+                //.....
+            }
+        });
+       
+
+        //$.jsonp({
+        //    url: "http://localhost:27736/api/test/testone",
+        //    data: JSON.stringify(data),
+        //    callback: "callbackAction",
+        //    success: function (json) {
+        //        //your code             
+        //    },
+        //    error: function (xOptions, textStatus) {
+        //        //your code            
+        //    }
+        //});
+    }
+
+
+
+
+</script>
+
+<h2>Index</h2>
+
+<input type="button" value="click me" onclick="testMd5()"/>
